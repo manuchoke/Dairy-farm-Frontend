@@ -1,0 +1,42 @@
+/* styles/SalesScreen.css */
+
+.sales-screen {
+    padding: 20px;
+    text-align: center;
+    background-color: #f0f4f8; /* Light background color for the entire screen */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    color: #2c3e50; /* Darker text color for the title */
+}
+
+.chart-container {
+    background-color: #ffffff; /* White background for chart containers */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.chart {
+    height: 400px; /* Fixed height for charts */
+}
+
+.sales-icon {
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.icon-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.icon-image:hover {
+    transform: scale(1.1);
+}
+  

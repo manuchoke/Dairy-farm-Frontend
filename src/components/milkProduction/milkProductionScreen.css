@@ -1,0 +1,246 @@
+/* milkProductionScreen.css */
+.milk-production-screen-container {
+  position: relative;
+  background-color: #1a1a1a;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+
+.popup-form-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #2d2d2d;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  z-index: 1001;
+  border: 1px solid #3b3b3b;
+  width: 90%;
+  max-width: 600px;
+}
+
+.icon-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.3s ease;
+}
+
+.icon-button:hover {
+  transform: scale(1.1);
+}
+
+.icon-image {
+  width: 80px;
+  height: 80px;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
+}
+
+.icons {
+  text-align: left;
+  padding: 20px 0;
+  margin-bottom: 30px;
+}
+
+.milk-production-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.records-section {
+  margin-top: 30px;
+  background-color: #2d2d2d;
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.date-picker-container {
+  margin-bottom: 30px;
+}
+
+.date-picker {
+  padding: 12px;
+  border: 2px solid #3b3b3b;
+  border-radius: 8px;
+  background-color: #3b3b3b;
+  color: #e0e0e0;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.date-picker:focus {
+  border-color: #4a4a4a;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(74, 74, 74, 0.2);
+}
+
+.summary-stats {
+  margin-bottom: 30px;
+  padding: 25px;
+  background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+  border-radius: 15px;
+  color: white;
+  font-size: 1.4rem;
+  font-weight: 600;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+  border: 2px solid #1976D2;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.summary-stats h2 {
+  margin: 0;
+  font-size: 1.8rem;
+  letter-spacing: 0.5px;
+}
+
+.records-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  border-bottom: 3px solid #2196F3;
+  padding-bottom: 30px;
+}
+
+.records-tabs h3 {
+  color: #e0e0e0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #3b3b3b;
+}
+
+.table-container {
+  overflow-x: auto;
+  margin-bottom: 2rem;
+  background-color: #2d2d2d;
+  border-radius: 10px;
+  padding: 15px;
+  border: 2px solid #3b3b3b;
+  position: relative;
+}
+
+.table-container:not(:last-child) {
+  margin-bottom: 40px;
+  border-bottom: 3px solid #2196F3;
+  padding-bottom: 30px;
+}
+
+table {
+  min-width: 100%;
+  border-collapse: collapse;
+  background-color: #2d2d2d;
+  border: 2px solid #3b3b3b;
+}
+
+th, td {
+  padding: 12px 15px;
+  text-align: left;
+  border: 2px solid #3b3b3b;
+  color: #2196F3;
+  font-weight: 500;
+}
+
+th {
+  background-color: #3b3b3b;
+  font-weight: 600;
+  color: #e0e0e0;
+  border-bottom: 3px solid #2196F3;
+}
+
+tr:last-child td {
+  border-bottom: 3px solid #2196F3;
+  font-weight: 400;
+  background-color: #2d2d2d;
+  color: #2196F3;
+}
+
+tr:hover {
+  background-color: #3b3b3b;
+}
+
+tr:hover:last-child td {
+  background-color:#3b3b3b;
+}
+tr:hover td {
+  color: #64B5F6;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.edit-button {
+  background-color: #2196F3;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  border: none;
+  font-weight: 500;
+}
+
+.edit-button:hover {
+  background-color: #1976D2;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.delete-button {
+  background-color: #f44336;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  border: none;
+  font-weight: 500;
+}
+
+.delete-button:hover {
+  background-color: #d32f2f;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .milk-production-container {
+    padding: 10px;
+  }
+  
+  .records-section {
+    padding: 15px;
+  }
+  
+  .icon-image {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+  }
+  
+  .edit-button,
+  .delete-button {
+    width: 100%;
+  }
+}

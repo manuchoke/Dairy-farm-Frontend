@@ -1,0 +1,195 @@
+.milk-production-form-popup {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #2d2d2d;
+  padding: 30px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  border-radius: 15px;
+  border: 1px solid #3b3b3b;
+  color: #2196F3;
+  width: 90%;
+  max-width: 500px;
+}
+.form-label {
+  color: rgb(245, 236, 236);
+}
+
+.form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  color: #e0e0e0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+.pop-overlay {
+  background-color: rgb(253, 246, 246);
+  color: rgb(245, 236, 236);
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  padding: 20px;
+  border-radius: 15px;
+  border: 1px solid #3b3b3b;
+}
+
+.milk-production-form {
+  margin-top: 20px;
+}
+
+.milk-production-form label {
+  display: block;
+  margin-bottom: 8px;
+  color: #000000;
+  font-weight: 500;
+}
+
+.milk-production-form input,
+.milk-production-form select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 2px solid #3b3b3b;
+  border-radius: 8px;
+  background-color: #ffffff;
+  color: #000000;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.milk-production-form input:focus,
+.milk-production-form select:focus,
+.milk-production-form select:active,
+.milk-production-form select:focus-visible {
+  border-color: #2196F3;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
+  background-color: #e3f2fd;
+}
+
+.milk-production-form select option {
+  background-color: #ffffff;
+  color: #000000;
+  padding: 10px;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.milk-production-form select option:hover,
+.milk-production-form select option:focus,
+.milk-production-form select option:active,
+.milk-production-form select option:checked {
+  background-color: #e3f2fd;
+  color: #000000;
+  font-weight: 600;
+}
+
+.milk-production-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  background-color: #2d2d2d;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid #3b3b3b;
+}
+
+.milk-production-table th,
+.milk-production-table td {
+  padding: 12px;
+  text-align: left;
+  border: 2px solid #3b3b3b;
+  color: #2196F3;
+  font-weight: 500;
+}
+
+.milk-production-table th {
+  background-color: #3b3b3b;
+  color: #e0e0e0;
+  font-weight: 600;
+  border-bottom: 3px solid #2196F3;
+}
+
+.milk-production-table td {
+  color: #2196F3;
+}
+
+.milk-production-table tr:hover td {
+  color: #64B5F6;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.form-submit-btn {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.form-submit-btn:hover {
+  background-color: #45a049;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.form-cancel-btn {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.form-cancel-btn:hover {
+  background-color: #da190b;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.date-input {
+  color: #e0e0e0;
+  background-color: #3b3b3b;
+  border: 2px solid #3b3b3b;
+  border-radius: 8px;
+  padding: 10px;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.date-input:focus {
+  border-color: #4a4a4a;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(74, 74, 74, 0.2);
+}
+
+.tr, td {
+  color: #e0e0e0;
+  font-family: 'Inter', sans-serif;
+}
+
+.tableHeaders {
+  color: #e0e0e0;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  background-color: #3b3b3b;
+}

@@ -1,0 +1,26 @@
+.card {
+  background-color: #424242; /* Dark gray background for cards */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effects */
+  height: 200px; /* Fixed height for uniformity */
+}
+
+.card:hover {
+  transform: translateY(-5px); /* Lift effect on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Deeper shadow on hover */
+}
+
+.card h3 {
+  color: white; /* White text for titles */
+}
+
+.card p {
+  color: #e0e0e0; /* Lighter gray for descriptions */
+}
+
+.card span {
+  background-color: #1e88e5; /* Blue background for tags */
+  color: white; /* White text for tags */
+}

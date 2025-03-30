@@ -1,0 +1,65 @@
+/* src/styles/sidebar.css */
+
+.sidebar {
+    position: fixed;
+    top: 64px; /* Height of navbar */
+    left: 0;
+    bottom: 0;
+    width: 256px;
+    background-color: #2d2d2d;
+    color: #fff;
+    padding: 1.5rem;
+    overflow-y: auto;
+    transition: all 0.3s ease;
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0 15px 15px 0;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 0.75rem;
+}
+
+.sidebar a {
+    display: block;
+    padding: 0.75rem 1rem;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    margin: 0.25rem 0;
+    background-color: #2196f3;
+    border: 1px solid #1976d2;
+    text-align: center;
+    font-weight: 500;
+}
+
+.sidebar a:hover {
+    background-color: #1976d2;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.active-link {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    font-weight: 600;
+}
+
+/* Add some spacing for the content area */
+.main-content {
+    margin-left: 256px;
+    padding: 2rem;
+    min-height: calc(100vh - 64px);
+    background-color: #1a1a1a;
+    color: #ffffff;
+}
+  
