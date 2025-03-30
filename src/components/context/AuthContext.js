@@ -22,7 +22,12 @@ export const AuthProvider = ({ children }) => {
         setUser(response.data);
       }
     } catch (err) {
-      console.error('Auth status check error:', err);
+      console.error('Auth status check error:', {
+        message: err.message,
+        code: err.code,
+        response: err.response,
+        config: err.config
+      });
       localStorage.removeItem("token");
       delete axios.defaults.headers.common["Authorization"];
       setUser(null);
@@ -58,15 +63,19 @@ export const AuthProvider = ({ children }) => {
         message: err.message,
         code: err.code,
         response: err.response,
-        config: err.config
+        config: err.config,
+        url: err.config?.url,
+        baseURL: err.config?.baseURL
       });
 
       if (!err.response) {
         // Network error
         if (err.code === 'ECONNABORTED') {
           setError('Request timeout. Please try again.');
-        } else {
+        } else if (err.code === 'ERR_NETWORK') {
           setError('Network error. Please check your connection and try again.');
+        } else {
+          setError('Connection error. Please try again.');
         }
       } else {
         // Server error
@@ -117,15 +126,19 @@ export const AuthProvider = ({ children }) => {
         message: err.message,
         code: err.code,
         response: err.response,
-        config: err.config
+        config: err.config,
+        url: err.config?.url,
+        baseURL: err.config?.baseURL
       });
 
       if (!err.response) {
         // Network error
         if (err.code === 'ECONNABORTED') {
           setError('Request timeout. Please try again.');
-        } else {
+        } else if (err.code === 'ERR_NETWORK') {
           setError('Network error. Please check your connection and try again.');
+        } else {
+          setError('Connection error. Please try again.');
         }
       } else {
         // Server error

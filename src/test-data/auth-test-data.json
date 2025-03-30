@@ -1,0 +1,147 @@
+{
+  "baseUrl": "https://dairy-farm-server.onrender.com",
+  "endpoints": {
+    "login": "/api/auth/login",
+    "register": "/api/auth/register",
+    "verifyEmail": "/api/auth/verify-email",
+    "forgotPassword": "/api/auth/forgot-password",
+    "resetPassword": "/api/auth/reset-password",
+    "verifyOTP": "/api/auth/verify-otp",
+    "verifyToken": "/api/auth/verify"
+  },
+  "testUsers": {
+    "validUser": {
+      "email": "testuser@example.com",
+      "password": "Test@123456",
+      "name": "Test User"
+    },
+    "invalidUser": {
+      "email": "invalid@example.com",
+      "password": "wrongpassword"
+    },
+    "unverifiedUser": {
+      "email": "unverified@example.com",
+      "password": "Test@123456"
+    },
+    "newUser": {
+      "email": "newuser@example.com",
+      "password": "NewUser@123",
+      "name": "New User"
+    }
+  },
+  "testCases": {
+    "login": [
+      {
+        "name": "Valid Login",
+        "method": "POST",
+        "body": {
+          "email": "testuser@example.com",
+          "password": "Test@123456"
+        },
+        "expectedStatus": 200
+      },
+      {
+        "name": "Invalid Credentials",
+        "method": "POST",
+        "body": {
+          "email": "invalid@example.com",
+          "password": "wrongpassword"
+        },
+        "expectedStatus": 401
+      },
+      {
+        "name": "Unverified Email",
+        "method": "POST",
+        "body": {
+          "email": "unverified@example.com",
+          "password": "Test@123456"
+        },
+        "expectedStatus": 403
+      }
+    ],
+    "register": [
+      {
+        "name": "New User Registration",
+        "method": "POST",
+        "body": {
+          "email": "newuser@example.com",
+          "password": "NewUser@123",
+          "name": "New User"
+        },
+        "expectedStatus": 201
+      },
+      {
+        "name": "Existing User Registration",
+        "method": "POST",
+        "body": {
+          "email": "testuser@example.com",
+          "password": "Test@123456",
+          "name": "Test User"
+        },
+        "expectedStatus": 409
+      }
+    ],
+    "forgotPassword": [
+      {
+        "name": "Valid Email",
+        "method": "POST",
+        "body": {
+          "email": "testuser@example.com"
+        },
+        "expectedStatus": 200
+      },
+      {
+        "name": "Invalid Email",
+        "method": "POST",
+        "body": {
+          "email": "nonexistent@example.com"
+        },
+        "expectedStatus": 404
+      }
+    ],
+    "verifyOTP": [
+      {
+        "name": "Valid OTP",
+        "method": "POST",
+        "body": {
+          "email": "testuser@example.com",
+          "otp": "123456"
+        },
+        "expectedStatus": 200
+      },
+      {
+        "name": "Invalid OTP",
+        "method": "POST",
+        "body": {
+          "email": "testuser@example.com",
+          "otp": "000000"
+        },
+        "expectedStatus": 400
+      }
+    ],
+    "resetPassword": [
+      {
+        "name": "Valid Reset",
+        "method": "POST",
+        "body": {
+          "token": "valid-reset-token",
+          "password": "NewPassword@123"
+        },
+        "expectedStatus": 200
+      },
+      {
+        "name": "Invalid Token",
+        "method": "POST",
+        "body": {
+          "token": "invalid-token",
+          "password": "NewPassword@123"
+        },
+        "expectedStatus": 400
+      }
+    ]
+  },
+  "headers": {
+    "Content-Type": "application/json",
+    "Authorization": "Bearer {{token}}"
+  }
+} 

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseURL = 'https://dairy-farm-server.onrender.com';
+const baseURL = process.env.REACT_APP_API_URL || 'https://dairy-farm-server.onrender.com';
 
 const instance = axios.create({
   baseURL,
@@ -13,7 +13,7 @@ const instance = axios.create({
 // Add a request interceptor to add the auth token and log requests
 instance.interceptors.request.use(
   (config) => {
-    console.log('Making request to:', config.url);
+    console.log('Making request to:', `${baseURL}${config.url}`);
     console.log('Request headers:', config.headers);
     const token = localStorage.getItem('token');
     if (token) {
@@ -38,7 +38,9 @@ instance.interceptors.response.use(
       message: error.message,
       code: error.code,
       response: error.response,
-      config: error.config
+      config: error.config,
+      url: error.config?.url,
+      baseURL: error.config?.baseURL
     });
 
     if (error.code === 'ECONNABORTED') {
