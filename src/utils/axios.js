@@ -4,7 +4,7 @@ const baseURL = 'https://dairy-farm-server.onrender.com';
 
 const instance = axios.create({
   baseURL,
-  timeout: 5000,
+  timeout: 30000,
   headers: {
     'Content-Type': 'application/json'
   }
@@ -20,6 +20,22 @@ instance.interceptors.request.use(
     return config;
   },
   (error) => {
+    return Promise.reject(error);
+  }
+);
+
+// Add a response interceptor to handle errors
+instance.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.code === 'ECONNABORTED') {
+      console.error('Request timeout');
+      return Promise.reject(new Error('Request timeout. Please try again.'));
+    }
+    if (!error.response) {
+      console.error('Network error:', error);
+      return Promise.reject(new Error('Network error. Please check your connection and try again.'));
+    }
     return Promise.reject(error);
   }
 );

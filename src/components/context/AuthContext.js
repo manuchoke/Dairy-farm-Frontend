@@ -22,8 +22,10 @@ export const AuthProvider = ({ children }) => {
         setUser(response.data);
       }
     } catch (err) {
+      console.error('Auth status check error:', err);
       localStorage.removeItem("token");
       delete axios.defaults.headers.common["Authorization"];
+      setUser(null);
     } finally {
       setLoading(false);
     }
@@ -32,34 +34,62 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     try {
       setError(null);
+      setLoading(true);
+      
       const res = await axios.post("/api/auth/login", { 
         email, 
         password 
       });
-      localStorage.setItem("token", res.data.token);
-      axios.defaults.headers.common["Authorization"] = `Bearer ${res.data.token}`;
-      setUser(res.data.user);
-      return true;
+
+      if (res.data && res.data.token) {
+        localStorage.setItem("token", res.data.token);
+        axios.defaults.headers.common["Authorization"] = `Bearer ${res.data.token}`;
+        setUser(res.data.user);
+        return true;
+      } else {
+        throw new Error('Invalid response from server');
+      }
     } catch (err) {
-      setError(err.response?.data?.message || "Login failed");
+      console.error('Login error:', err);
+      if (!err.response) {
+        setError('Network error. Please check your connection and try again.');
+      } else {
+        setError(err.response?.data?.message || "Login failed");
+      }
       throw err;
+    } finally {
+      setLoading(false);
     }
   };
 
   const register = async (email, password) => {
     try {
       setError(null);
+      setLoading(true);
+      
       const res = await axios.post("/api/auth/register", { 
         email, 
         password 
       });
-      localStorage.setItem("token", res.data.token);
-      axios.defaults.headers.common["Authorization"] = `Bearer ${res.data.token}`;
-      setUser(res.data.user);
-      return true;
+
+      if (res.data && res.data.token) {
+        localStorage.setItem("token", res.data.token);
+        axios.defaults.headers.common["Authorization"] = `Bearer ${res.data.token}`;
+        setUser(res.data.user);
+        return true;
+      } else {
+        throw new Error('Invalid response from server');
+      }
     } catch (err) {
-      setError(err.response?.data?.message || "Registration failed");
+      console.error('Registration error:', err);
+      if (!err.response) {
+        setError('Network error. Please check your connection and try again.');
+      } else {
+        setError(err.response?.data?.message || "Registration failed");
+      }
       throw err;
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -67,6 +97,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("token");
     delete axios.defaults.headers.common["Authorization"];
     setUser(null);
+    setError(null);
   };
 
   const updateUser = (userData) => {
