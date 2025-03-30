@@ -1,59 +1,77 @@
-import { useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useState, useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 import axios from '../../utils/axios';
 
 const VerifyOTP = () => {
   const [searchParams] = useSearchParams();
-  const email = searchParams.get("email");
-  const [otp, setOtp] = useState("");
-  const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const email = searchParams.get('email');
   const navigate = useNavigate();
+  const [otp, setOtp] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(300); // 5 minutes in seconds
+
+  useEffect(() => {
+    if (!email) {
+      navigate('/forgot-password');
+    }
+  }, [email, navigate]);
+
+  useEffect(() => {
+    if (timeLeft > 0) {
+      const timer = setInterval(() => {
+        setTimeLeft(prev => prev - 1);
+      }, 1000);
+      return () => clearInterval(timer);
+    }
+  }, [timeLeft]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
-    setError("");
+    setLoading(true);
 
     try {
-      console.log('Submitting OTP verification:', {
-        email: email,
-        otp: otp.trim()
+      const response = await axios.post('/api/auth/verify-otp', {
+        email: email.toLowerCase().trim(),
+        otp
       });
 
-      const response = await axios.post("/api/auth/verify-otp", {
-        email: email,
-        otp: otp.trim()
-      });
-
-      console.log('Server response:', response.data);
-
-      if (response.data.resetToken) {
-        navigate(`/reset-password/${response.data.resetToken}`);
+      if (response.data.success) {
+        toast.success('OTP verified successfully');
+        navigate(`/reset-password?token=${response.data.token}`);
       }
-    } catch (err) {
-      console.error('Full error:', err);
-      console.error('Error response:', err.response?.data);
-      setError(err.response?.data?.message || "Invalid OTP. Please try again.");
+    } catch (error) {
+      console.error('OTP verification error:', error);
+      if (error.response) {
+        toast.error(error.response.data?.message || 'Failed to verify OTP');
+      } else {
+        toast.error('Network error. Please try again');
+      }
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   };
 
   const handleResendOTP = async () => {
+    setLoading(true);
     try {
-      setIsLoading(true);
-      setError("");
-      
-      await axios.post("/api/auth/forgot-password", {
-        email: email
+      const response = await axios.post('/api/auth/resend-otp', {
+        email: email.toLowerCase().trim()
       });
 
-      alert("New OTP has been sent to your email");
-    } catch (err) {
-      setError("Failed to resend OTP. Please try again.");
+      if (response.data.success) {
+        toast.success('New OTP has been sent to your email');
+        setTimeLeft(300); // Reset timer
+      }
+    } catch (error) {
+      console.error('Resend OTP error:', error);
+      if (error.response) {
+        toast.error(error.response.data?.message || 'Failed to resend OTP');
+      } else {
+        toast.error('Network error. Please try again');
+      }
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   };
 
@@ -68,12 +86,6 @@ const VerifyOTP = () => {
             Enter the OTP sent to {email}
           </p>
         </div>
-
-        {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
-            {error}
-          </div>
-        )}
 
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div>
@@ -96,14 +108,14 @@ const VerifyOTP = () => {
           <div>
             <button
               type="submit"
-              disabled={isLoading || otp.length !== 6}
+              disabled={loading || otp.length !== 6}
               className={`group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white ${
-                isLoading || otp.length !== 6
+                loading || otp.length !== 6
                   ? "bg-indigo-400 cursor-not-allowed"
                   : "bg-indigo-600 hover:bg-indigo-700"
               } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
             >
-              {isLoading ? "Verifying..." : "Verify OTP"}
+              {loading ? "Verifying..." : "Verify OTP"}
             </button>
           </div>
 
@@ -111,7 +123,7 @@ const VerifyOTP = () => {
             <button
               type="button"
               onClick={handleResendOTP}
-              disabled={isLoading}
+              disabled={loading}
               className="text-indigo-600 hover:text-indigo-500"
             >
               Resend OTP

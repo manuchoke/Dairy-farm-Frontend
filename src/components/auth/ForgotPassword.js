@@ -13,17 +13,20 @@ const ForgotPassword = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post('/api/auth/forgot-password', {
-        email: email.toLowerCase().trim()
-      });
-
+      const response = await axios.post('/api/auth/forgot-password', { email: email.toLowerCase().trim() });
+      
       if (response.data.success) {
-        toast.success('OTP sent to your email!');
+        toast.success('Password reset instructions have been sent to your email');
+        setEmail('');
         navigate(`/verify-otp?email=${encodeURIComponent(email)}`);
       }
     } catch (error) {
       console.error('Forgot password error:', error);
-      toast.error(error.response?.data?.message || 'Failed to send OTP. Please try again.');
+      if (error.response) {
+        toast.error(error.response.data?.message || 'Failed to process request');
+      } else {
+        toast.error('Network error. Please try again');
+      }
     } finally {
       setLoading(false);
     }
