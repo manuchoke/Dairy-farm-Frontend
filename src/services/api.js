@@ -1,8 +1,7 @@
-import axios from 'axios';
+import axios from '../utils/axios';
 
-const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || 'http://localhost:5000/api',
-});
+// No need to create a new instance since we're using the configured one
+const api = axios;
 
 // Request interceptor
 api.interceptors.request.use(

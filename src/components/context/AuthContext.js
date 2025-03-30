@@ -36,10 +36,14 @@ export const AuthProvider = ({ children }) => {
       setError(null);
       setLoading(true);
       
+      console.log('Attempting login with:', { email });
+      
       const res = await axios.post("/api/auth/login", { 
         email, 
         password 
       });
+
+      console.log('Login response:', res.data);
 
       if (res.data && res.data.token) {
         localStorage.setItem("token", res.data.token);
@@ -50,11 +54,35 @@ export const AuthProvider = ({ children }) => {
         throw new Error('Invalid response from server');
       }
     } catch (err) {
-      console.error('Login error:', err);
+      console.error('Login error details:', {
+        message: err.message,
+        code: err.code,
+        response: err.response,
+        config: err.config
+      });
+
       if (!err.response) {
-        setError('Network error. Please check your connection and try again.');
+        // Network error
+        if (err.code === 'ECONNABORTED') {
+          setError('Request timeout. Please try again.');
+        } else {
+          setError('Network error. Please check your connection and try again.');
+        }
       } else {
-        setError(err.response?.data?.message || "Login failed");
+        // Server error
+        switch (err.response.status) {
+          case 401:
+            setError('Invalid email or password');
+            break;
+          case 403:
+            setError('Please verify your email before logging in');
+            break;
+          case 500:
+            setError('Server error. Please try again later.');
+            break;
+          default:
+            setError(err.response?.data?.message || "Login failed");
+        }
       }
       throw err;
     } finally {
@@ -67,10 +95,14 @@ export const AuthProvider = ({ children }) => {
       setError(null);
       setLoading(true);
       
+      console.log('Attempting registration with:', { email });
+      
       const res = await axios.post("/api/auth/register", { 
         email, 
         password 
       });
+
+      console.log('Registration response:', res.data);
 
       if (res.data && res.data.token) {
         localStorage.setItem("token", res.data.token);
@@ -81,11 +113,35 @@ export const AuthProvider = ({ children }) => {
         throw new Error('Invalid response from server');
       }
     } catch (err) {
-      console.error('Registration error:', err);
+      console.error('Registration error details:', {
+        message: err.message,
+        code: err.code,
+        response: err.response,
+        config: err.config
+      });
+
       if (!err.response) {
-        setError('Network error. Please check your connection and try again.');
+        // Network error
+        if (err.code === 'ECONNABORTED') {
+          setError('Request timeout. Please try again.');
+        } else {
+          setError('Network error. Please check your connection and try again.');
+        }
       } else {
-        setError(err.response?.data?.message || "Registration failed");
+        // Server error
+        switch (err.response.status) {
+          case 400:
+            setError(err.response?.data?.message || 'Invalid registration data');
+            break;
+          case 409:
+            setError('Email already registered');
+            break;
+          case 500:
+            setError('Server error. Please try again later.');
+            break;
+          default:
+            setError(err.response?.data?.message || "Registration failed");
+        }
       }
       throw err;
     } finally {
